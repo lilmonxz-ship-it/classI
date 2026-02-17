@@ -68,6 +68,35 @@ void Unit::newTurn(){
 /////////////////////////////////////////////////////////////////////////////////////
 //Write function members isDead(), guard(), heal(), beAttacked(), and attack() here//
 /////////////////////////////////////////////////////////////////////////////////////
+bool Unit::isDead(){
+	if(hp <= 0) return true;
+	else return false;
+}
+
+void Unit::guard(){
+	guard_on = true;
+}
+
+int Unit::beAttacked(int oppatk){
+	int dmg = oppatk - def;
+	if(guard_on) dmg = dmg/3;
+
+	if(dmg < 0) dmg = 0; 
+	
+	hp -= dmg;
+	return dmg;
+}
+
+int Unit::attack(Unit &target){
+	return target.beAttacked(atk);
+}
+
+int Unit::heal(){
+	int h = rand() % 21 + 10;
+	if(hp + h > hpmax) h = hpmax - hp;
+	hp += h;
+	return h;
+}
 
 
 
